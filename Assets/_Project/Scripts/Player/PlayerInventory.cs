@@ -1,15 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class PlayerInventory : MonoBehaviour
 {
     [SerializeField] private Transform _storage;
 
+    private List<Transform> _inventory = new List<Transform>();
+
     [SerializeField] private int _maxItemStorage;
     private int _currentStorage;
 
     [SerializeField] private float _timeToCollect;
+    [SerializeField] private float _timeToDeliver;
     private float _timer;
 
     [SerializeField] private Vector3 _offset;
@@ -24,33 +28,18 @@ public class PlayerInventory : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag(PlayerPrefKeys.ItemSpawner))
+        switch (other.tag)
         {
-            if (other.TryGetComponent(out SpawnerMachineStorage storage))
-            {
-                _timer += Time.fixedDeltaTime;
-                if (_timer < _timeToCollect)
-                {
-                    return;
-                }
+            case PlayerPrefKeys.GarbageZone:
+                _onEnterGarbageZone();
+            break;
 
-                if (!storage.IsEmpty())
+            case PlayerPrefKeys.ItemSpawner:
+                if (other.TryGetComponent(out SpawnerMachineStorage storage))
                 {
-                    return;
+                    _onEnterSpawnerZone(storage);
                 }
-
-                if (_checkItemCount())
-                {
-                    _getItem(storage.GetItem());
-
-                    _timer = 0f;
-                }
-
-                else
-                {
-                    _timer = 0f;
-                }
-            }
+            break;
         }
     }
 
@@ -77,10 +66,12 @@ public class PlayerInventory : MonoBehaviour
 
         _lastItemPosition = item.localPosition;
 
+        _inventory.Add(item);
+
         _currentStorage++;
     }
 
-    private bool _checkItemCount()
+    private bool _checkMaxItemCount()
     {
         bool value = false;
 
@@ -90,5 +81,80 @@ public class PlayerInventory : MonoBehaviour
         }
 
         return value;
+    }
+
+    private bool _isEmpty()
+    {
+        bool value = false;
+
+        if (_currentStorage == 0)
+        {
+            value = true;
+        }
+
+        return value;
+    }
+
+    private void _onEnterSpawnerZone(SpawnerMachineStorage storage)
+    {
+        _timer += Time.fixedDeltaTime;
+        if (_timer < _timeToCollect)
+        {
+            return;
+        }
+
+        if (!storage.IsEmpty())
+        {
+            return;
+        }
+
+        if (_checkMaxItemCount())
+        {
+            _getItem(storage.GetItem());
+
+            _timer = 0f;
+        }
+
+        else
+        {
+            _timer = 0f;
+        }
+    }
+
+    private void _onEnterGarbageZone()
+    {
+        _timer += Time.fixedDeltaTime;
+        if (_isEmpty())
+        {
+            _timer = 0f;
+
+            return;
+        }
+
+        if (_timer >= _timeToDeliver)
+        {
+            _remoteItem();
+
+            _timer = 0f;
+
+            return;
+        }
+    }
+
+    private void _remoteItem()
+    {
+        int id = 0;
+
+        if (_inventory.Count - 1 >= 0)
+        {
+            id = _inventory.Count - 1;
+        }
+
+        Transform item = _inventory[id];
+        _inventory.RemoveAt(id);
+        
+        _currentStorage--;
+
+        Destroy(item.gameObject);
     }
 }
