@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Item Spawner
   - Garbage Zone
+  - Transformer Storage
+  - Tranformer Input
   layers:
   - Default
   - TransparentFX

@@ -12,4 +12,6 @@ public class PlayerPrefKeys
 
     public const string ItemSpawner = "Item Spawner";
     public const string GarbageZone = "Garbage Zone";
+    public const string TransformerStorage = "Transformer Storage";
+    public const string TranformerInput = "Tranformer Input";
 }

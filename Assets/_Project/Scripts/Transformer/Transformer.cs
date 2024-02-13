@@ -1,14 +1,15 @@
+using DG.Tweening;
+using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using NaughtyAttributes;
-using DG.Tweening;
 
-public class SpawnerMachine : MonoBehaviour
+public class Transformer : MonoBehaviour
 {
     [SerializeField] private Animation _spawnMachineAnimation;
     [SerializeField] private Transform _spawnStorage;
-    [SerializeField] private SpawnerMachineStorage _machineStorage;
+    [SerializeField] private TransformerStorage _transformerStorage;
+    [SerializeField] private TransformerInputStorage _transformerInputStorage;
 
     [SerializeField] private GameObject _spawnItemPrefab;
 
@@ -17,37 +18,36 @@ public class SpawnerMachine : MonoBehaviour
     [SerializeField] private float _spawnTime;
     private float _timer;
 
-    // Start is called before the first frame update
     void Start()
     {
-       _spawnedItemCount = 0;
+        _spawnedItemCount = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     private void OnEnable()
     {
         EventSystem.OnStartGame += _onGameStart;
 
-        EventSystem.OnItemTakenFromSpawnerStorage += _onItemTakenFromStorage;
+        EventSystem.OnItemTakenFromTransformerStorage += _onItemTakenFromStorage;
     }
 
     private void OnDisable()
     {
         EventSystem.OnStartGame -= _onGameStart;
 
-        EventSystem.OnItemTakenFromSpawnerStorage -= _onItemTakenFromStorage;
+        EventSystem.OnItemTakenFromTransformerStorage += _onItemTakenFromStorage;
     }
 
     private void _onGameStart()
     {
-        InvokeRepeating(nameof(_spawnItem), 0f, _spawnTime);
+        InvokeRepeating(nameof(_getRequiredItem), 0f, _spawnTime);
 
-        //DOVirtual.DelayedCall(_spawnTime, () => this._spawnItem());
+        //DOVirtual.DelayedCall(_spawnTime, () => this._getRequiredItem());
     }
 
     [Button]
@@ -62,11 +62,25 @@ public class SpawnerMachine : MonoBehaviour
 
         GameObject spawned = Instantiate(_spawnItemPrefab, _spawnStorage.position, Quaternion.identity, _spawnStorage);
 
-        _machineStorage.SetItemPosition(spawned.GetComponent<Item>(), _spawnedItemCount);
+        _transformerStorage.SetItemPosition(spawned.GetComponent<Item>(), _spawnedItemCount);
 
         _playAnim();
 
         _spawnedItemCount++;
+    }
+
+    private void _getRequiredItem()
+    {
+        if (_transformerInputStorage.IsEmpty())
+        {
+            return;
+        }
+
+        _transformerInputStorage.GetItem();
+
+        Invoke(nameof(_spawnItem), _spawnTime);
+
+        //DOVirtual.DelayedCall(_spawnTime, () => this._spawnItem());
     }
 
     private void _checkSpawnedCount()
@@ -78,10 +92,11 @@ public class SpawnerMachine : MonoBehaviour
 
         else
         {
-            InvokeRepeating(nameof(_spawnItem), 0f, _spawnTime);
-            //DOVirtual.DelayedCall(_spawnTime, () => this._spawnItem());
+            InvokeRepeating(nameof(_getRequiredItem), 0f, _spawnTime);
+
+            //DOVirtual.DelayedCall(_spawnTime, () => this._getRequiredItem());
         }
-    } 
+    }
 
     private void _onItemTakenFromStorage()
     {

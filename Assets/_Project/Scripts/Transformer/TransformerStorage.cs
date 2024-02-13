@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnerMachineStorage : MonoBehaviour
+public class TransformerStorage : MonoBehaviour
 {
     [SerializeField] private List<Transform> _storages = new List<Transform>();
     [SerializeField] private List<Item> _items = new List<Item>();
@@ -41,7 +41,7 @@ public class SpawnerMachineStorage : MonoBehaviour
 
         _offset -= new Vector3(0f, 0.2f, 0f);
 
-        EventSystem.CallItemTakenFromSpawnerStorage();
+        EventSystem.CallItemTakenFromTransformerStorage();
 
         return item;
     }

@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnerMachineStorage : MonoBehaviour
+public class TransformerInputStorage : MonoBehaviour
 {
+    public ItemType requiredItem;
+
     [SerializeField] private List<Transform> _storages = new List<Transform>();
     [SerializeField] private List<Item> _items = new List<Item>();
     [SerializeField] private Vector3 _offset;
@@ -15,9 +17,9 @@ public class SpawnerMachineStorage : MonoBehaviour
         _storagePos = _storages[0].position;
     }
 
-    public void SetItemPosition(Item item, int count)
+    public void SetItemPosition(Item item)
     {
-        int reminder = count % _storages.Count;
+        int reminder = _items.Count % _storages.Count;
 
         if (reminder == 0)
         {
@@ -33,7 +35,7 @@ public class SpawnerMachineStorage : MonoBehaviour
         _items.Add(item);
     }
 
-    public Item GetItem()
+    public void GetItem()
     {
         Item item = _items[_checkInventory()];
 
@@ -41,9 +43,8 @@ public class SpawnerMachineStorage : MonoBehaviour
 
         _offset -= new Vector3(0f, 0.2f, 0f);
 
-        EventSystem.CallItemTakenFromSpawnerStorage();
+        Destroy(item.gameObject);
 
-        return item;
     }
 
     public bool IsEmpty()

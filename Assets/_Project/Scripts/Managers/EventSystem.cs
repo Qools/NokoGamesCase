@@ -15,5 +15,8 @@ public static class EventSystem
     public static void CallJoystickButtonUp() => OnJoystickButtonUp?.Invoke();
 
     public static Action OnItemTakenFromSpawnerStorage;
-    public static void CallItemTakenFromSpawnerStorage() => OnItemTakenFromSpawnerStorage?.Invoke(); 
+    public static void CallItemTakenFromSpawnerStorage() => OnItemTakenFromSpawnerStorage?.Invoke();
+
+    public static Action OnItemTakenFromTransformerStorage;
+    public static void CallItemTakenFromTransformerStorage() => OnItemTakenFromTransformerStorage?.Invoke();
 }

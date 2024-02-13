@@ -7,7 +7,7 @@ public class PlayerInventory : MonoBehaviour
 {
     [SerializeField] private Transform _storage;
 
-    private List<Transform> _inventory = new List<Transform>();
+    private List<Item> _inventory = new List<Item>();
 
     [SerializeField] private int _maxItemStorage;
     private int _currentStorage;
@@ -40,6 +40,21 @@ public class PlayerInventory : MonoBehaviour
                     _onEnterSpawnerZone(storage);
                 }
             break;
+
+            case PlayerPrefKeys.TranformerInput:
+                if(other.TryGetComponent(out TransformerInputStorage transformetInputStorage))
+                {
+                    _onEnterTransformerInput(transformetInputStorage);
+                }
+            break;
+
+            case PlayerPrefKeys.TransformerStorage:
+                if (other.TryGetComponent(out TransformerStorage tranformerStorage))
+                {
+                    _onEnterTransformerZone(tranformerStorage);
+                }
+            break;
+
         }
     }
 
@@ -51,20 +66,20 @@ public class PlayerInventory : MonoBehaviour
         }
     }
 
-    private void _getItem(Transform item)
+    private void _getItem(Item item)
     {
         if (_currentStorage == 0)
         {
             _lastItemPosition = Vector3.zero;
         }
 
-        item.SetParent(_storage);
+        item.transform.SetParent(_storage);
 
-        item.localPosition = Vector3.zero;
-        item.localPosition = _lastItemPosition + _offset;
-        item.localRotation = Quaternion.Euler(Vector3.zero);
+        item.transform.localPosition = Vector3.zero;
+        item.transform.localPosition = _lastItemPosition + _offset;
+        item.transform.localRotation = Quaternion.Euler(Vector3.zero);
 
-        _lastItemPosition = item.localPosition;
+        _lastItemPosition = item.transform.localPosition;
 
         _inventory.Add(item);
 
@@ -103,7 +118,7 @@ public class PlayerInventory : MonoBehaviour
             return;
         }
 
-        if (!storage.IsEmpty())
+        if (storage.IsEmpty())
         {
             return;
         }
@@ -141,20 +156,93 @@ public class PlayerInventory : MonoBehaviour
         }
     }
 
-    private void _remoteItem()
+    private void _onEnterTransformerInput(TransformerInputStorage transformerInputStorage)
     {
-        int id = 0;
-
-        if (_inventory.Count - 1 >= 0)
+        _timer += Time.fixedDeltaTime;
+        if (_isEmpty())
         {
-            id = _inventory.Count - 1;
+            _timer = 0f;
+
+            return;
         }
 
-        Transform item = _inventory[id];
-        _inventory.RemoveAt(id);
+        if (_timer >= _timeToDeliver)
+        {
+            DepositeItem(transformerInputStorage);
+            _timer = 0f;
+
+            return;
+        }
+    }
+
+    private void _onEnterTransformerZone(TransformerStorage storage)
+    {
+        _timer += Time.fixedDeltaTime;
+        if (_timer < _timeToCollect)
+        {
+            return;
+        }
+
+        if (storage.IsEmpty())
+        {
+            return;
+        }
+
+        if (_checkMaxItemCount())
+        {
+            _getItem(storage.GetItem());
+
+            _timer = 0f;
+        }
+
+        else
+        {
+            _timer = 0f;
+        }
+    }
+
+    private void _remoteItem()
+    {
+        Item item = _inventory[_checkInventory()];
+        _inventory.RemoveAt(_checkInventory());
         
         _currentStorage--;
 
         Destroy(item.gameObject);
+    }
+
+    public void DepositeItem(TransformerInputStorage transformerInputStorage)
+    {
+        if (_isEmpty())
+        {
+            return;
+        }
+
+        Item itemToDeliver = _inventory[_checkInventory()];
+
+        if (itemToDeliver.Type == transformerInputStorage.requiredItem)
+        {
+            _inventory.Remove(itemToDeliver);
+            transformerInputStorage.SetItemPosition(itemToDeliver);
+            _currentStorage--;
+        }
+
+        else
+        {
+            return;
+        }
+    }
+
+    private int _checkInventory()
+    {
+
+        int id = 0;
+
+        if (_inventory.Count - 1 > 0)
+        {
+            id = _inventory.Count - 1;
+        }
+
+        return id;
     }
 }
