@@ -9,4 +9,6 @@ public class PlayerPrefKeys
 
     public const string Horizontal = "Horizontal";
     public const string Vertical = "Vertical";
+
+    public const string ItemSpawner = "Item Spawner";
 }
