@@ -34,12 +34,33 @@ public class SpawnerMachineStorage : MonoBehaviour
 
     public Transform GetItem()
     {
-        Transform item = _items[_items.Count];
+        int id = 0;
 
-        _items.RemoveAt(_items.Count);
+        if (_items.Count - 1 >= 0)
+        {
+            id = _items.Count - 1;
+        }
+
+        Transform item = _items[id];
+
+        _items.RemoveAt(id);
+
+        _offset -= new Vector3(0f, 0.2f + 0f);
 
         EventSystem.CallItemTakenFromSpawnerStorage();
 
         return item;
+    }
+
+    public bool IsEmpty()
+    {
+        bool value = true;
+
+        if (_items.Count == 0)
+        {
+            value = false;
+        }
+
+        return value;
     }
 }

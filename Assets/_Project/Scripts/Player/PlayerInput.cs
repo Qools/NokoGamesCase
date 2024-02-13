@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.Searcher.SearcherWindow.Alignment;
 
-public class Player : MonoBehaviour
+public class PlayerInput : MonoBehaviour
 {
     [SerializeField] private Transform character;
     [SerializeField] private Rigidbody _rigidbody;
@@ -22,7 +21,7 @@ public class Player : MonoBehaviour
         if (!GameManager.Instance.isGameStarted)
             return;
 
-        direction = new Vector3(Joystick.current.GetAxis(PlayerPrefKeys.Horizontal), 0f, Joystick.current.GetAxis(PlayerPrefKeys.Vertical));
+        
 
         Rotate();
 
@@ -69,6 +68,7 @@ public class Player : MonoBehaviour
 
     public void MoveForward()
     {
+        direction = new Vector3(Joystick.current.GetAxis(PlayerPrefKeys.Horizontal), 0f, Joystick.current.GetAxis(PlayerPrefKeys.Vertical));
         Vector3 newVelocity = Joystick.current.knobDistance * _movementSpeed * Time.fixedDeltaTime * direction;
         newVelocity.y = _rigidbody.velocity.y;
         _rigidbody.velocity = newVelocity;

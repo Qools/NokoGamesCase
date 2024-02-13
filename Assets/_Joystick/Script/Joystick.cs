@@ -18,7 +18,6 @@ public class Joystick : MonoBehaviour
     [SerializeField]
     private Vector2 direction;
 
-
     public float knobDistance;
 
     Vector2 start;
