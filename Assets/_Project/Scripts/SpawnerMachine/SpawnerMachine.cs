@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
-using DG.Tweening;
 
 public class SpawnerMachine : MonoBehaviour
 {
@@ -15,7 +14,6 @@ public class SpawnerMachine : MonoBehaviour
     [SerializeField] private float _maxSpawnItemCapacity;
     private int _spawnedItemCount;
     [SerializeField] private float _spawnTime;
-    private float _timer;
 
     // Start is called before the first frame update
     void Start()
@@ -45,9 +43,7 @@ public class SpawnerMachine : MonoBehaviour
 
     private void _onGameStart()
     {
-        InvokeRepeating(nameof(_spawnItem), 0f, _spawnTime);
-
-        //DOVirtual.DelayedCall(_spawnTime, () => this._spawnItem());
+        InvokeRepeating(nameof(_spawnItem), _spawnTime, _spawnTime);
     }
 
     [Button]
@@ -58,35 +54,34 @@ public class SpawnerMachine : MonoBehaviour
 
     private void _spawnItem()
     {
-        _checkSpawnedCount();
+        if (_checkSpawnedCount())
+        {
+            return;
+        }
 
         GameObject spawned = Instantiate(_spawnItemPrefab, _spawnStorage.position, Quaternion.identity, _spawnStorage);
 
-        _machineStorage.SetItemPosition(spawned.GetComponent<Item>(), _spawnedItemCount);
+        _machineStorage.SetItemPosition(spawned.GetComponent<Item>());
 
         _playAnim();
 
         _spawnedItemCount++;
     }
 
-    private void _checkSpawnedCount()
+    private bool _checkSpawnedCount()
     {
+        bool value = false;
+
         if (_spawnedItemCount == _maxSpawnItemCapacity)
         {
-            CancelInvoke();
+            value = true;
         }
 
-        else
-        {
-            InvokeRepeating(nameof(_spawnItem), 0f, _spawnTime);
-            //DOVirtual.DelayedCall(_spawnTime, () => this._spawnItem());
-        }
+        return value;
     } 
 
     private void _onItemTakenFromStorage()
     {
         _spawnedItemCount--;
-
-        _checkSpawnedCount();
     }
 }

@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.Progress;
 
 public class PlayerInventory : MonoBehaviour
 {
@@ -129,11 +128,6 @@ public class PlayerInventory : MonoBehaviour
 
             _timer = 0f;
         }
-
-        else
-        {
-            _timer = 0f;
-        }
     }
 
     private void _onEnterGarbageZone()
@@ -141,8 +135,6 @@ public class PlayerInventory : MonoBehaviour
         _timer += Time.fixedDeltaTime;
         if (_isEmpty())
         {
-            _timer = 0f;
-
             return;
         }
 
@@ -161,8 +153,6 @@ public class PlayerInventory : MonoBehaviour
         _timer += Time.fixedDeltaTime;
         if (_isEmpty())
         {
-            _timer = 0f;
-
             return;
         }
 
@@ -192,11 +182,6 @@ public class PlayerInventory : MonoBehaviour
         {
             _getItem(storage.GetItem());
 
-            _timer = 0f;
-        }
-
-        else
-        {
             _timer = 0f;
         }
     }

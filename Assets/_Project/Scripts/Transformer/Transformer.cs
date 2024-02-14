@@ -40,14 +40,12 @@ public class Transformer : MonoBehaviour
     {
         EventSystem.OnStartGame -= _onGameStart;
 
-        EventSystem.OnItemTakenFromTransformerStorage += _onItemTakenFromStorage;
+        EventSystem.OnItemTakenFromTransformerStorage -= _onItemTakenFromStorage;
     }
 
     private void _onGameStart()
     {
-        InvokeRepeating(nameof(_getRequiredItem), 0f, _spawnTime);
-
-        //DOVirtual.DelayedCall(_spawnTime, () => this._getRequiredItem());
+        InvokeRepeating(nameof(_getRequiredItem), _spawnTime, _spawnTime);
     }
 
     [Button]
@@ -58,11 +56,14 @@ public class Transformer : MonoBehaviour
 
     private void _spawnItem()
     {
-        _checkSpawnedCount();
+        if (_checkSpawnedCount())
+        {
+            return;
+        }
 
         GameObject spawned = Instantiate(_spawnItemPrefab, _spawnStorage.position, Quaternion.identity, _spawnStorage);
 
-        _transformerStorage.SetItemPosition(spawned.GetComponent<Item>(), _spawnedItemCount);
+        _transformerStorage.SetItemPosition(spawned.GetComponent<Item>());
 
         _playAnim();
 
@@ -79,29 +80,22 @@ public class Transformer : MonoBehaviour
         _transformerInputStorage.GetItem();
 
         Invoke(nameof(_spawnItem), _spawnTime);
-
-        //DOVirtual.DelayedCall(_spawnTime, () => this._spawnItem());
     }
 
-    private void _checkSpawnedCount()
+    private bool _checkSpawnedCount()
     {
+        bool value = false;
+
         if (_spawnedItemCount == _maxSpawnItemCapacity)
         {
-            CancelInvoke();
+            value = true;
         }
 
-        else
-        {
-            InvokeRepeating(nameof(_getRequiredItem), 0f, _spawnTime);
-
-            //DOVirtual.DelayedCall(_spawnTime, () => this._getRequiredItem());
-        }
+        return value;
     }
 
     private void _onItemTakenFromStorage()
     {
         _spawnedItemCount--;
-
-        _checkSpawnedCount();
     }
 }

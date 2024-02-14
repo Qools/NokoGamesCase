@@ -6,30 +6,39 @@ public class TransformerStorage : MonoBehaviour
 {
     [SerializeField] private List<Transform> _storages = new List<Transform>();
     [SerializeField] private List<Item> _items = new List<Item>();
+    
     [SerializeField] private Vector3 _offset;
+    private Vector3 _startingOffset;
     private Vector3 _storagePos;
+
+    private int _storageIndex;
 
     // Start is called before the first frame update
     void Start()
     {
         _storagePos = _storages[0].position;
+
+        _startingOffset = _offset;
+
+        _storageIndex = 0;
     }
 
-    public void SetItemPosition(Item item, int count)
-    {
-        int reminder = count % _storages.Count;
+    public void SetItemPosition(Item item)
+    {        
+        int reminder = _storageIndex % _storages.Count;
 
         if (reminder == 0)
         {
-            _offset += new Vector3(0f, 0.2f, 0f);
+            _offset += _startingOffset;
         }
 
         _storagePos = _storages[reminder].position + _offset;
 
         item.transform.SetParent(_storages[reminder]);
         item.transform.position = _storagePos;
-        item.transform.localRotation = Quaternion.Euler(Vector3.zero);
+        item.transform.localRotation = Quaternion.Euler(new Vector3(90f, 0f, 0f));
 
+        _storageIndex++;
         _items.Add(item);
     }
 
@@ -39,7 +48,14 @@ public class TransformerStorage : MonoBehaviour
 
         _items.Remove(item);
 
-        _offset -= new Vector3(0f, 0.2f, 0f);
+        int reminder = _storageIndex % _storages.Count;
+
+        if (reminder == 0)
+        {
+            _offset -= _startingOffset;
+        }
+
+        _storageIndex--;
 
         EventSystem.CallItemTakenFromTransformerStorage();
 
