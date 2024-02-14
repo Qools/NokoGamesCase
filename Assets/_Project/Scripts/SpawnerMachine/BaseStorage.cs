@@ -11,6 +11,7 @@ public class BaseStorage : MonoBehaviour
     protected Vector3 _storagePos;
     protected Vector3 _startingOffset;
 
+    [SerializeField] protected int _maxCapacity;
     protected int _storageIndex;
 
     protected Item _item;
@@ -75,6 +76,18 @@ public class BaseStorage : MonoBehaviour
         bool value = false;
 
         if (_items.Count == 0)
+        {
+            value = true;
+        }
+
+        return value;
+    }
+
+    public bool IsFull()
+    {
+        bool value = false;
+
+        if (_maxCapacity <= _storageIndex)
         {
             value = true;
         }

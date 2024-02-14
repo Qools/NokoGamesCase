@@ -35,7 +35,12 @@ public class Transformer : BaseSpawner
             return;
         }
 
-        _transformerInputStorage.GetItem();
+        if (_transformerStorage.IsFull())
+        {
+            return;
+        }
+
+        Destroy( _transformerInputStorage.GetItem().gameObject );
 
         Invoke(nameof(_spawnItem), _spawnTime);
     }

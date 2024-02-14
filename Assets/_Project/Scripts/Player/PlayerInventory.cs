@@ -69,10 +69,7 @@ public class PlayerInventory : MonoBehaviour
 
     private void _getItem(Item item)
     {
-        if (_currentStorage == 0)
-        {
-            _lastItemPosition = Vector3.zero;
-        }
+        _resetLastPosition();
 
         item.transform.SetParent(_storage);
 
@@ -167,6 +164,11 @@ public class PlayerInventory : MonoBehaviour
             return;
         }
 
+        if (transformerInputStorage.IsFull())
+        {
+            return;
+        }
+
         if (_timer >= _timeToDeliver)
         {
             DepositeItem(transformerInputStorage);
@@ -201,7 +203,9 @@ public class PlayerInventory : MonoBehaviour
     {
         Item item = _inventory[_checkInventory()];
         _inventory.RemoveAt(_checkInventory());
-        
+
+        _resetLastPosition();
+
         _currentStorage--;
 
         Destroy(item.gameObject);
@@ -220,6 +224,9 @@ public class PlayerInventory : MonoBehaviour
         {
             _inventory.Remove(itemToDeliver);
             transformerInputStorage.SetItemPosition(itemToDeliver);
+
+            _resetLastPosition();
+
             _currentStorage--;
         }
 
@@ -240,5 +247,13 @@ public class PlayerInventory : MonoBehaviour
         }
 
         return id;
+    }
+
+    private void _resetLastPosition()
+    {
+        if (_currentStorage == 0)
+        {
+            _lastItemPosition = Vector3.zero;
+        }
     }
 }

@@ -141,8 +141,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _storage: {fileID: 123811477095276498}
   _maxItemStorage: 50
-  _timeToCollect: 0.2
-  _timeToDeliver: 0.2
+  _timeToCollect: 0.25
+  _timeToDeliver: 0.25
   _offset: {x: 0, y: 0.4, z: 0}
   _isPlayer: 1
 --- !u!1001 &3907308427822736954

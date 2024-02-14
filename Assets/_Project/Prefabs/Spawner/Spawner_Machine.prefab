@@ -300,6 +300,7 @@ MonoBehaviour:
   - {fileID: 4880572413957407945}
   _items: []
   _offset: {x: 0, y: 0.3, z: 0}
+  _maxCapacity: 25
 --- !u!65 &2242077511174028014
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -360,6 +361,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -9136705934433583714, guid: e762a61c155bb96428360832f6f787f9,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: db6c2cfd8c52a0249b1fc52734f33927, type: 2}
     - target: {fileID: -8679921383154817045, guid: e762a61c155bb96428360832f6f787f9,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -425,6 +431,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -5363424281805771908, guid: e762a61c155bb96428360832f6f787f9,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ab2571feddf094644b7594821b67f1cd, type: 2}
     - target: {fileID: 919132149155446097, guid: e762a61c155bb96428360832f6f787f9,
         type: 3}
       propertyPath: m_Name
@@ -435,12 +446,22 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
+    - target: {fileID: 1442450553484104045, guid: e762a61c155bb96428360832f6f787f9,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ab2571feddf094644b7594821b67f1cd, type: 2}
     - target: {fileID: 2223639932434330405, guid: e762a61c155bb96428360832f6f787f9,
         type: 3}
       propertyPath: m_Animation
       value: 
       objectReference: {fileID: -1422011007694221501, guid: e762a61c155bb96428360832f6f787f9,
         type: 3}
+    - target: {fileID: 5619936992786470849, guid: e762a61c155bb96428360832f6f787f9,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: db6c2cfd8c52a0249b1fc52734f33927, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -483,7 +504,6 @@ MonoBehaviour:
   _storage: {fileID: 2634431217222618722}
   _spawnItemPrefab: {fileID: 6706818019729405109, guid: 63d921dcd6e63f5498743fec3482c7f3,
     type: 3}
-  _maxSpawnItemCapacity: 20
   _spawnTime: 1
   _machineStorage: {fileID: 2634431217222618722}
 --- !u!4 &6784480161948512161 stripped

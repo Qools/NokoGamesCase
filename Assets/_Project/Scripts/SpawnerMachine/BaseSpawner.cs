@@ -11,7 +11,6 @@ public class BaseSpawner : MonoBehaviour
 
     [SerializeField] protected GameObject _spawnItemPrefab;
 
-    [SerializeField] protected float _maxSpawnItemCapacity;
     protected int _spawnedItemCount;
     [SerializeField] protected float _spawnTime;
     protected virtual void  Start()
@@ -42,7 +41,7 @@ public class BaseSpawner : MonoBehaviour
 
     protected virtual void _spawnItem()
     {
-        if (_checkSpawnedCount())
+        if (_storage.IsFull())
         {
             return;
         }
@@ -54,18 +53,6 @@ public class BaseSpawner : MonoBehaviour
         _playAnim();
 
         _spawnedItemCount++;
-    }
-
-    protected virtual bool _checkSpawnedCount()
-    {
-        bool value = false;
-
-        if (_spawnedItemCount == _maxSpawnItemCapacity)
-        {
-            value = true;
-        }
-
-        return value;
     }
 
     protected virtual void _onItemTakenFromStorage()

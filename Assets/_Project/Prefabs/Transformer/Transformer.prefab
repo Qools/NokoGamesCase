@@ -228,6 +228,7 @@ MonoBehaviour:
   - {fileID: 4480948688275139361}
   _items: []
   _offset: {x: 0, y: 0.2, z: 0}
+  _maxCapacity: 25
 --- !u!1 &2472304562468834365
 GameObject:
   m_ObjectHideFlags: 0
@@ -611,6 +612,7 @@ MonoBehaviour:
   - {fileID: 7272064465033799952}
   _items: []
   _offset: {x: 0, y: 0.4, z: 0}
+  _maxCapacity: 25
   requiredItem: 0
 --- !u!1 &7145923020915963736
 GameObject:
@@ -778,6 +780,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -5704499102696965246, guid: adeea34ff7cc9064eb724c458f7e5625,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 25669cc512473334187cda2b9224956a, type: 2}
     - target: {fileID: 919132149155446097, guid: adeea34ff7cc9064eb724c458f7e5625,
         type: 3}
       propertyPath: m_Name
@@ -856,7 +863,6 @@ MonoBehaviour:
   _storage: {fileID: 1190017910926451499}
   _spawnItemPrefab: {fileID: 3225449345079741867, guid: ce87bb4ee37040645adce38dd2b09016,
     type: 3}
-  _maxSpawnItemCapacity: 30
   _spawnTime: 1
   _transformerStorage: {fileID: 1190017910926451499}
   _transformerInputStorage: {fileID: 8896560454201852561}
