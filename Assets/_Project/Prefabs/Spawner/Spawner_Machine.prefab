@@ -480,11 +480,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spawnMachineAnimation: {fileID: 5149335123489094511}
   _spawnStorage: {fileID: 4689424263959779753}
-  _machineStorage: {fileID: 2634431217222618722}
+  _storage: {fileID: 2634431217222618722}
   _spawnItemPrefab: {fileID: 6706818019729405109, guid: 63d921dcd6e63f5498743fec3482c7f3,
     type: 3}
   _maxSpawnItemCapacity: 20
   _spawnTime: 1
+  _machineStorage: {fileID: 2634431217222618722}
 --- !u!4 &6784480161948512161 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e762a61c155bb96428360832f6f787f9,

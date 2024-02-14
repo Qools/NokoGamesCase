@@ -602,7 +602,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65d2fd22c8f8a67428b5619f36891942, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  requiredItem: 0
   _storages:
   - {fileID: 1192185527226865395}
   - {fileID: 4378148392898250785}
@@ -612,6 +611,7 @@ MonoBehaviour:
   - {fileID: 7272064465033799952}
   _items: []
   _offset: {x: 0, y: 0.4, z: 0}
+  requiredItem: 0
 --- !u!1 &7145923020915963736
 GameObject:
   m_ObjectHideFlags: 0
@@ -853,9 +853,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spawnMachineAnimation: {fileID: 3311254009022466098}
   _spawnStorage: {fileID: 6710623565943599988}
-  _transformerStorage: {fileID: 1190017910926451499}
-  _transformerInputStorage: {fileID: 8896560454201852561}
+  _storage: {fileID: 1190017910926451499}
   _spawnItemPrefab: {fileID: 3225449345079741867, guid: ce87bb4ee37040645adce38dd2b09016,
     type: 3}
   _maxSpawnItemCapacity: 30
   _spawnTime: 1
+  _transformerStorage: {fileID: 1190017910926451499}
+  _transformerInputStorage: {fileID: 8896560454201852561}
