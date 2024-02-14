@@ -14,4 +14,8 @@ public class PlayerPrefKeys
     public const string GarbageZone = "Garbage Zone";
     public const string TransformerStorage = "Transformer Storage";
     public const string TranformerInput = "Tranformer Input";
+
+    public const string AI = "AI";
+    public const string Walk = "Walk";
+    public const string Stop = "Stop";
 }

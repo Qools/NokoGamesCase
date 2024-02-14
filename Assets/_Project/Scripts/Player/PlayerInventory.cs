@@ -18,6 +18,8 @@ public class PlayerInventory : MonoBehaviour
     [SerializeField] private Vector3 _offset;
     private Vector3 _lastItemPosition;
 
+    [SerializeField] private bool _isPlayer;
+
     private void Start()
     {
         _lastItemPosition = Vector3.zero;
@@ -94,6 +96,12 @@ public class PlayerInventory : MonoBehaviour
             value = true;
         }
 
+        else
+        {
+            if (!_isPlayer)
+                EventSystem.CallInvetoryFull();
+        }
+
         return value;
     }
 
@@ -104,6 +112,9 @@ public class PlayerInventory : MonoBehaviour
         if (_currentStorage == 0)
         {
             value = true;
+
+            if(!_isPlayer)
+                EventSystem.CallInventoryEmpty();
         }
 
         return value;

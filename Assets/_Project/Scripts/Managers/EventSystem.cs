@@ -19,4 +19,10 @@ public static class EventSystem
 
     public static Action OnItemTakenFromTransformerStorage;
     public static void CallItemTakenFromTransformerStorage() => OnItemTakenFromTransformerStorage?.Invoke();
+
+    public static Action OnInventoryFull;
+    public static void CallInvetoryFull() => OnInventoryFull?.Invoke();
+
+    public static Action OnInvetoryEmpty;
+    public static void CallInventoryEmpty() => OnInvetoryEmpty?.Invoke();
 }

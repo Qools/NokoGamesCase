@@ -299,7 +299,7 @@ MonoBehaviour:
   - {fileID: 6565601251184085062}
   - {fileID: 4880572413957407945}
   _items: []
-  _offset: {x: 0, y: 0.2, z: 0}
+  _offset: {x: 0, y: 0.3, z: 0}
 --- !u!65 &2242077511174028014
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -360,6 +360,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: e762a61c155bb96428360832f6f787f9,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e762a61c155bb96428360832f6f787f9,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e762a61c155bb96428360832f6f787f9,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e762a61c155bb96428360832f6f787f9,
         type: 3}
       propertyPath: m_LocalPosition.x

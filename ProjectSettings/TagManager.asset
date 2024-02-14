@@ -8,6 +8,7 @@ TagManager:
   - Garbage Zone
   - Transformer Storage
   - Tranformer Input
+  - AI
   layers:
   - Default
   - TransparentFX
